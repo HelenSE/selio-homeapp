@@ -29,3 +29,20 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 Route::get('property_single/{id}', [ApartmentController::class, 'index'])->name('show-apartment');
 Route::get('main', [ApartmentController::class, 'show'])->name('main');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
