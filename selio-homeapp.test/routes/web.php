@@ -16,7 +16,16 @@ use App\Http\Controllers\ApartmentController;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('admin', function (){
-    return view('admin.index');});
 
-Route::get('property_single/{id}', [ApartmentController::class, 'index', 'id'])->name('show-apartment');
+Route::get('admin', function () {
+    return view('admin.index');
+});
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('apartment', \App\Http\Controllers\Admin\ApartmentController::class);
+}
+
+);
+
+Route::get('property_single/{id}', [ApartmentController::class, 'index'])->name('show-apartment');
+Route::get('main', [ApartmentController::class, 'show'])->name('main');

@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.layout')
 @section('content')
     <section class="categories-sec section-padding">
         <div class="container">
@@ -13,17 +13,18 @@
             <div class="categories-details">
                 <div class="row">
                     @foreach($categoryTypes as $categoryType)
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-6 full">
-                        <div class="categories-info">
-                            <a href="#" title="">
-                                <div class="catg-icon">
-                                    <i class="la la-home"></i>
-                                </div>
-                            </a>
-                            <h3><a href="#" title="">{{$categoryType->name}}</a></h3>
-                            <a href="{{route('show-apartment', ['id'=>$categoryType->id])}}" title="" class="ext-link"></a>
-                        </div><!--categories-info end-->
-                    </div>
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-6 full">
+                            <div class="categories-info">
+                                <a href="#" title="">
+                                    <div class="catg-icon">
+                                        <i class="la la-home"></i>
+                                    </div>
+                                </a>
+                                <h3><a href="#" title="">{{$categoryType->name}}</a></h3>
+                                <a href="{{route('show-apartment', ['id'=>$categoryType->id])}}" title=""
+                                   class="ext-link"></a>
+                            </div><!--categories-info end-->
+                        </div>
                     @endforeach
                 </div>
             </div><!--categories-details end-->
@@ -40,51 +41,59 @@
                     </div>
                 </div>
             </div>
+
             <div class="row">
-                @foreach($popularApartments as $popularApartment)
-                <div class="col-lg-4 col-md-6">
-                    <div class="card">
-                        <a href="{{route('show-apartment', ['id'=>$popularApartment->id])}}" title="">
-                            <div class="img-block">
-                                <div class="overlay"></div>
-                                <img src="{{ $popularApartment->main_photo }}" alt="" class="img-fluid">
-                                <div class="rate-info">
-                                    <h5>${!! $popularApartment->price_per_hour!!}</h5>
-                                    <span>For Rent</span>
+                @foreach($apartments as $apartment)
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card">
+                            <a href="{{route('show-apartment', ['id'=>$apartment->id])}}" title="">
+                                <div class="img-block">
+                                    <div class="overlay"></div>
+                                    @if (Storage::disk('public')->exists($apartment->main_photo))
+                                        <img src="{{ asset('/storage/'.$apartment->main_photo) }}" width="295" height="370">
+                                    @else
+                                        <img src="{{ asset($apartment->main_photo) }}" width="295" height="370">
+                                    @endif
+                                    <div class="rate-info">
+                                        <h5>${!! $apartment->price_per_hour!!}</h5>
+                                        <span>For Rent</span>
+                                    </div>
                                 </div>
+                            </a>
+                            <div class="card-body">
+                                <a href="{{ route('show-apartment', ['id'=>$apartment->id])}}" title="">
+                                    <h3>{{$apartment->name}}</h3>
+                                    <p><i class="la la-map-marker"></i>{{$apartment->address}}</p>
+                                </a>
+                                <ul>
+                                    <li>Number of people : {{ $apartment->people_minimum }}
+                                        - {{ $apartment->people_maximum }}</li>
+                                    <li>Category : {{ $apartment->category_type}}</li>
+                                </ul>
                             </div>
-                        </a>
-                        <div class="card-body">
-                            <a href="{{ route('show-apartment', ['id'=>$popularApartment->id])}}" title="">
-                                <h3>{{$popularApartment->name}}</h3>
-                                <p><i class="la la-map-marker"></i>{{$popularApartment->address}}</p>
-                            </a>
-                            <ul>
-                                <li>Number of people : {{ $popularApartment->people_minimum }} - {{ $popularApartment->people_maximum }}</li>
-                             <li>Category : {{ $popularApartment->category_type}}</li>
-                            </ul>
+                            <div class="card-footer">
+                                <a href="#" class="pull-left">
+                                    <i class="la la-heart-o"></i>
+                                </a>
+                                <a href="#" class="pull-right">
+                                    <i class="la la-calendar-check-o"></i> 25 Days Ago</a>
+                            </div>
+                            <a href="{{route('show-apartment', ['id'=>$apartment->id])}}" title=""
+                               class="ext-link"></a>
                         </div>
-                        <div class="card-footer">
-                            <a href="#" class="pull-left">
-                                <i class="la la-heart-o"></i>
-                            </a>
-                            <a href="#" class="pull-right">
-                                <i class="la la-calendar-check-o"></i> 25 Days Ago</a>
-                        </div>
-                        <a href="{{route('show-apartment', ['id'=>$popularApartment->id])}}" title="" class="ext-link"></a>
                     </div>
-                </div>
                 @endforeach
-                    <div class="load-more-posts">
-                        <a href="#" title="" class="btn2">Load More</a>
-                    </div><!--load-more end-->
-                </div>
+                <div class="load-more-posts">
+{{--                    {!! $apartments->links() !!}--}}
+                </div><!--load-more end-->
             </div>
+        </div>
         </div>
     </section>
 
     <div class="alert alert-success" role="alert">
-        <strong>Added to Favourites</strong> You can check your favourite items here <a href="#" class="alert-link">Favourite Items</a>.
+        <strong>Added to Favourites</strong> You can check your favourite items here <a href="#" class="alert-link">Favourite
+            Items</a>.
         <a href="#" title="" class="close-alert"><i class="la la-close"></i></a>
     </div>
 
@@ -101,19 +110,19 @@
             </div>
             <div class="row">
                 @foreach($locations as $location)
-                <div class="col-xl-4 col-md-6">
-                    <a href="#">
-                        <div class="card">
-                            <div class="overlay"></div>
-                            <img src="{{$location->photo}}" alt="" class="img-fluid">
-                            <div class="card-body">
-                                <h4>{{$location->name}}</h4>
-                                <p>5 Listings</p>
-                                <i class="fa fa-angle-right"></i>
+                    <div class="col-xl-4 col-md-6">
+                        <a href="#">
+                            <div class="card">
+                                <div class="overlay"></div>
+                                <img src="{{$location->photo}}" alt="" class="img-fluid">
+                                <div class="card-body">
+                                    <h4>{{$location->name}}</h4>
+                                    <p>5 Listings</p>
+                                    <i class="fa fa-angle-right"></i>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                </div>
+                        </a>
+                    </div>
                 @endforeach
             </div>
 
@@ -121,10 +130,42 @@
 
     </section>
 
-    <section id="map-container" class="fullwidth-home-map">
-        <h3 class="vis-hid">Visible Heading</h3>
-        <div id="map" data-map-zoom="9"></div>
-    </section>
+    <div class="row mt-5">
+        <div class="col-12">
+            <div style="width: 100%; height: 400px" id="address-map"></div>
+
+            <script>
+                var map;
+                var default_center_latitude = {{ $apartment->latitude }};
+                var default_center_longitude = {{ $apartment->longitude }};
+                var default_zoom = 10;
+                function initMap() {
+                    var center = new google.maps.LatLng(
+                        default_center_latitude,
+                        default_center_longitude);
+                    var mapOptions = {
+                        zoom: default_zoom,
+                        center: center
+                    };
+                    map = new google.maps.Map(document.getElementById('address-map'), mapOptions);
+                    var marker = {"latitude": {{ $apartment->latitude }}, "longitude": {{ $apartment->longitude }} };
+                    var markerLatLng = new google.maps.LatLng(
+                        parseFloat(marker.latitude),
+                        parseFloat(marker.longitude));
+                    var icon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+                    mark = new google.maps.Marker({
+                        map: map,
+                        position: markerLatLng,
+                        icon: icon
+                    });
+                }
+            </script>
+            <script src="https://maps.googleapis.com/maps/api/js?key={{env('GOOGLE_MAP_KEY')}}&libraries=places&callback=initMap" async defer></script>
+
+        </div>
+    </div>
+    </div>
+
 
     <a href="#" title="">
         <section class="cta section-padding">
@@ -142,3 +183,5 @@
 
 
 @endsection
+
+

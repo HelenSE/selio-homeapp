@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{{asset('/site/css/style.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('/site/css/responsive.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('/site/css/color.css')}}">
+
 </head>
 
 <body>
@@ -130,9 +131,6 @@
                         <h3>Helpful Links</h3>
                         <ul>
                             <li>
-                                <a href="18_Half_Map.html" title="">Half Map</a>
-                            </li>
-                            <li>
                                 <a href="#" title="">Register</a>
                             </li>
                             <li>
@@ -202,10 +200,11 @@
 <script src="{{asset('/site/js/scripts.js')}}"></script>
 
 <!-- Maps -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVwc4veKudU0qjYrLrrQXacCkDkcy3AeQ"></script>
-<script src="{{asset('/site/js/map-cluster/infobox.min.js')}}"></script>
-<script src="{{asset('/site/js/map-cluster/markerclusterer.js')}}"></script>
-<script src="{{asset('/site/js/map-cluster/maps.js')}}"></script>
+
+
+{{--<script src="{{asset('/site/js/map-cluster/infobox.min.js')}}"></script>--}}
+{{--<script src="{{asset('/site/js/map-cluster/markerclusterer.js')}}"></script>--}}
+{{--<script src="{{asset('/site/js/map-cluster/maps.js')}}"></script>--}}
 
 
 

@@ -11,7 +11,7 @@ class CategoryType extends Model
 
     public function apartments()
     {
-        return $this->belongsToMany(Apartment::class);
+        return $this->belongsToMany(Apartment::class, 'apartment_category_types', 'category_type_id','apartment_id');
     }
     use HasFactory;
 }

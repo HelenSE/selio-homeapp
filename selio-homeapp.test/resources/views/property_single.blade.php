@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.layout')
 @section('content')
     <section class="property-single-pg">
         <div class="container">
@@ -28,7 +28,11 @@
                             <div class="property-imgs">
                                 <div class="property-main-img">
                                     <div class="property-img">
-                                        <img src="{{$apartment->main_photo}}" alt="">
+                                        @if (Storage::disk('public')->exists($apartment->main_photo))
+                                            <img src="{{ asset('/storage/'.$apartment->main_photo) }}" width="770" height="515">
+                                        @else
+                                            <img src="{{ asset($apartment->main_photo) }}" width="770" height="515">
+                                        @endif
                                     </div><!--property-img end-->
                                 </div><!--property-main-img end-->
                                 <div class="property-thumb-imgs">

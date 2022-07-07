@@ -16,7 +16,6 @@ class CreateApartmentsTable extends Migration
         Schema::create('apartments', function (Blueprint $table) {
             $table->id();
             $table->string('name', 200)->nullable(false);
-            $table->string('slug');
             $table->string('address');
             $table->integer('latitude')->nullable();
             $table->integer('longitude')->nullable();
@@ -27,6 +26,9 @@ class CreateApartmentsTable extends Migration
             $table->integer('people_maximum')->nullable();
             $table->integer('price_per_hour')->nullable();
             $table->boolean('is_featured')->default(0)->nullable();
+            $table->unsignedBigInteger('location_id')->nullable();
+            $table->index('location_id', 'apartment_location_idx');
+            $table->foreign('location_id', 'apartment_location_fk')->on('locations')->references('id');
             $table->timestamps();
         });
 
