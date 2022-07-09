@@ -90,23 +90,16 @@
                                         </div>
                                     </li>
                                 </ul>
-                                <div class="d-inline my-2 my-lg-0">
-                                    <ul class="navbar-nav">
-                                        <li class="nav-item signin-btn">
-                                            <a href="#" class="nav-link">
-                                                <i class="la la-sign-in"></i>
-                                                <span><b class="signin-op">Sign in</b> or <b class="reg-op">Register</b></span>
-                                            </a>
-
-                                        </li>
-                                        <li class="nav-item submit-btn">
-                                            <a href="#" class="my-2 my-sm-0 nav-link sbmt-btn">
-                                                <i class="icon-plus"></i>
-                                                <span>Submit Listing</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
+                                @csrf
+                                Hello, {{ Auth::user()->name }}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}</a>
+                                </li>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
                                 <a href="#" title="" class="close-menu"><i class="la la-close"></i></a>
                             </div>
                         </nav>

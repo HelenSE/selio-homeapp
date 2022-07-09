@@ -5,12 +5,12 @@
         function o(e, t, o, l, i, s) {
             return'<a href="'+e+'" class="listing-img-container"><div class="infoBox-close"><i class="fa fa-times"></i></div><img src="'+t+'" alt=""><div class="rate-info"> <h5>$550.000</h5> <span>For Rent</span> </div><div class="listing-item-content"><h3>'+o+"</h3><span><i class='la la-map-marker'></i>"+l+"</span></div></a>"
         }
-        var l=[[o("24_Property_Single.html", "assets/images/listing/1.jpg", "Grameen Sweets", "964 School Street, New York"),
+        var l=[[o("property_single.blade.php", "assets/images/listing/1.jpg", "Grameen Sweets", "964 School Street, New York"),
         23.72447089779572,
         90.42868673801422,
         1,
         '<i class="la la-home"></i>'],
-        [o("24_Property_Single.html", "assets/images/listing/2.jpg", "Traditional Apartments", "212 5th Ave, New York"),
+        [o("24_Property_Single.html", "assets/images/listing/2.jpg", "212 5th Ave, New York"),
         23.86009382,
         90.054245,
         2,
@@ -20,7 +20,7 @@
         90.44700623,
         3,
         '<i class="la la-home"></i>'],
-        [o("24_Property_Single.html", "assets/images/listing/4.jpg", "Burger House", "2726 Shinn Street, New York"),
+        [o("24_Property_Single.html", "assets/images/listing/4.jpg", "2726 Shinn Street, New York"),
         24.01591629,
         90.38771057,
         4,
@@ -243,18 +243,18 @@
                     var open = false;
                     if(typeof l[i].open != 'undefined')
                         open = l[i].open;
-                    
+
                     jQuery.each(l, function(){
                         this.open = false;
                     })
-                    
+
                     t.close();
                     if(open){
                         l[i].open = false;
                         return false;
                     }
                     l[i].open = true;
-                    
+
                     t.setOptions(d), g.innerHTML=l[i][0], t.open(m, o), l[i][3], google.maps.event.addListener(t, "domready", function() {
                         e(".infoBox-close").click(function(o) {
                             o.preventDefault(), t.close(), e(".map-marker-container").removeClass("clicked infoBox-opened")
@@ -520,7 +520,7 @@
             var open = false;
             if(e(this).hasClass("infoBox-opened"))
                 open = true;
-            e(".map-marker-container").removeClass("clicked infoBox-opened"), 
+            e(".map-marker-container").removeClass("clicked infoBox-opened"),
             google.maps.event.trigger(t, "click");
             if(!open){
                 e(this).addClass("clicked infoBox-opened");

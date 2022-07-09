@@ -21,7 +21,7 @@
                                     </div>
                                 </a>
                                 <h3><a href="#" title="">{{$categoryType->name}}</a></h3>
-                                <a href="{{route('show-apartment', ['id'=>$categoryType->id])}}" title=""
+                                <a href="{{route('category-apartment', ['id'=>$categoryType->id])}}" title=""
                                    class="ext-link"></a>
                             </div><!--categories-info end-->
                         </div>
@@ -111,7 +111,7 @@
             <div class="row">
                 @foreach($locations as $location)
                     <div class="col-xl-4 col-md-6">
-                        <a href="#">
+                        <a href="{{route('location-apartment', ['id'=>$location->id])}}">
                             <div class="card">
                                 <div class="overlay"></div>
                                 <img src="{{$location->photo}}" alt="" class="img-fluid">

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Apartment;
+use App\Models\CategoryType;
+use App\Models\Location;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +26,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $apartments = Apartment::all();
+        $categoryTypes = CategoryType::all();
+        $locations = Location::all();
+        return view('main', compact('locations', 'apartments', 'categoryTypes'));
     }
 }
