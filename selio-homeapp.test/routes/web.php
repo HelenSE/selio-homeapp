@@ -20,12 +20,15 @@ use App\Http\Controllers\CategoryTypeController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('admin', function () {
-    return view('admin.index');
-});
-Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
 
-    Route::resource('apartment', \App\Http\Controllers\Admin\ApartmentController::class);
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [\App\Http\Controllers\Admin\IndexController::class, 'index'])->name('main.index');
+    Route::resources([
+        'apartment'=>\App\Http\Controllers\Admin\ApartmentController::class,
+        'categoryType'=>\App\Http\Controllers\Admin\CategoryTypeController::class,
+        'location'=>\App\Http\Controllers\Admin\LocationController::class,
+//        'calendar'=>\App\Http\Controllers\CalendarController::class
+    ]);
 }
 
 );

@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateApartmentRequest;
-use App\Models\Apartment;
+use App\Http\Requests\Admin\StoreLocationRequest;
+use App\Http\Requests\Admin\UpdateLocationRequest;
+use App\Models\Location;
 use Illuminate\Http\Request;
 
-class ApartmentController extends Controller
+class LocationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +17,8 @@ class ApartmentController extends Controller
      */
     public function index()
     {
-        $apartments = Apartment::query()->paginate(6);
-        return view('admin.apartment.index', compact('apartments'));
+        $locations = Location::all();
+        return view('admin.location.index', compact(['locations']));
     }
 
     /**
@@ -27,7 +28,7 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-        return view('admin.apartment.create');
+        return view('admin.location.create');
     }
 
     /**
@@ -36,18 +37,18 @@ class ApartmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateApartmentRequest $request)
+    public function store(StoreLocationRequest $request)
     {
         $data = $request->all();
-        if(!is_null($request->file('main_photo'))) {
-            $path = $request->file('main_photo')->store('public/apartments/main_photo');
+        if(!is_null($request->file('photo'))) {
+            $path = $request->file('photo')->store('public/location/photo');
             $path = str_replace('public/', '', $path);
         } else {
             $path = 'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled-1150x647.png';
         }
-        $data['main_photo'] = $path;
-        $apartment = Apartment::query()->create($data);
-        return redirect(route('admin.apartment.index'), compact('apartment'));
+        $data['photo'] = $path;
+        Location::query()->create($data);
+        return redirect()->route('admin.location.index');
     }
 
     /**
@@ -56,9 +57,9 @@ class ApartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Apartment $apartment)
+    public function show(Location $location)
     {
-        return view('admin.apartment.show', compact('apartment'));
+        return view('admin.location.show', ['location' => $location]);
     }
 
     /**
@@ -67,9 +68,9 @@ class ApartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Apartment $apartment)
+    public function edit(Location $location)
     {
-        return view('admin.apartment.edit', compact('apartment'));
+        return view('admin.location.edit', ['location' => $location]);
     }
 
     /**
@@ -79,18 +80,17 @@ class ApartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Apartment $apartment)
+    public function update(UpdateLocationRequest $request, Location $location)
     {
         $data = $request->all();
-        if(!is_null($request->file('main_photo'))) {
-            $path = $request->file('main_photo')->store('public/apartments/main_photo');
+        $location->update($data);
+        if(!is_null($request->file('photo'))) {
+            $path = $request->file('photo')->store('public/location/photo');
             $path = str_replace('public/', '', $path);
-            $data['main_photo'] = $path;
+            $data['photo'] = $path;
         }
-        $apartment->fill($data);
-        $apartment->save();
-
-        return redirect(route('admin.apartment.index'));
+        $location->save();
+        return redirect()->route('admin.location.show', ['location' => $location]);
     }
 
     /**
@@ -99,9 +99,9 @@ class ApartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Apartment $apartment)
+    public function destroy(Location $location)
     {
-        $apartment->delete();
-        return redirect(route('admin.apartment.index'));
+        $location->delete();
+        return redirect()->route('admin.location.index');
     }
 }
